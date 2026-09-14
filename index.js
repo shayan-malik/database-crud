@@ -53,7 +53,7 @@ app.put("/student/:id", async (req, res) => {
             [body.first_name, body.last_name, body.course, body.batch, body.roll_number, body.age, id]);
 
         if (response.rows.length === 0) {
-            return res.status(400).send({ status: "error", message: `Student not found with id ${id}` })
+            return res.status(404).send({ status: "error", message: `Student not found with id ${id}` })
         }
 
         res.status(200).send({ status: "success", message: "Student Updated Successfully", student: response.rows[0] });
@@ -73,7 +73,7 @@ app.delete("/student/:id", async (req, res) => {
         const response = await db.query(`DELETE FROM students WHERE id = $1 RETURNING *`, [id]);
 
         if (response.rows.length === 0) {
-            return res.status(400).send({ status: "error", message: `Student not found with id ${id}` })
+            return res.status(404).send({ status: "error", message: `Student not found with id ${id}` })
         }
 
         res.status(200).send({ status: "success", message: "Student Deleted Successfully", student: response.rows[0] });
